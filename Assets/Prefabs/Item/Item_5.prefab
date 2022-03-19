@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1.5
+  _configItem: {fileID: 11400000, guid: 9b95261cacc670649838321e90d1f693, type: 2}
 --- !u!82 &5355990447195537420
 AudioSource:
   m_ObjectHideFlags: 0

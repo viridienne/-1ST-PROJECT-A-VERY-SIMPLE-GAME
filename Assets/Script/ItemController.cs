@@ -6,6 +6,8 @@ public class ItemController : MonoBehaviour
 {
     [SerializeField]
     private float _speed;
+    [SerializeField]
+    private ItemConfig _configItem;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,7 @@ public class ItemController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _speed = _configItem.Speed;
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
     }
 

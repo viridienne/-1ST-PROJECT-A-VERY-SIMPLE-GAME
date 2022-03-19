@@ -13,10 +13,19 @@ public class MenuCanvasController : MonoBehaviour
     private Button _buttonQuit;
     [SerializeField]
     private TextMeshProUGUI _txtScore;
+
+    [SerializeField]
+    private TextMeshProUGUI _txtTime;
+
+    [SerializeField]
+    private Button _btnSetting;
+    [SerializeField]
+    private RectTransform _pnlSetting;
     // Start is called before the first frame update
     void Start()
     {
-        _txtScore.text = $"High Score: {PlayerPrefs.GetInt("score")}";
+        _txtScore.text = $"Score: {PlayerPrefs.GetInt("score")}";
+        _txtTime.text = $"Time: {PlayerPrefs.GetFloat("time")}";
     }
 
     // Update is called once per frame
@@ -28,5 +37,9 @@ public class MenuCanvasController : MonoBehaviour
     public void OnQuitButtongClicked()
     {
         Application.Quit();
+    }
+    public void OnBtnSettingClicked()
+    {
+        _pnlSetting.gameObject.SetActive(true);
     }
 }

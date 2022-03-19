@@ -28,7 +28,7 @@ public class CanvasController : MonoBehaviour
     private AudioSlider _bgmaudioslider;
     [SerializeField]
     private AudioSlider _sfxaudioslider;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -72,4 +72,5 @@ public class CanvasController : MonoBehaviour
 
         _settingPanel.gameObject.SetActive(true);
     }
+    
 }

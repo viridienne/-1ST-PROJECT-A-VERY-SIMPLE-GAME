@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    //animation
     [SerializeField]
     private Animator _anim;
 
+    //basic data
     [SerializeField]
     private float _speed;
     [SerializeField]
@@ -15,19 +18,32 @@ public class PlayerController : MonoBehaviour
     private int _lives;
 
     [SerializeField]
+    private Slider _healthbar;
+
+    //spawner
+    [SerializeField]
     private Spawner _spawner;
+
+    //canvas
     [SerializeField]
     private CanvasController _canvasCtrl;
     [SerializeField]
     bool isDead;
 
-
+    //audio
     [SerializeField]
     private AudioSource _audio;
     [SerializeField]
     private AudioClip _scoreSound;
     [SerializeField]
     private AudioClip _damageSound;
+
+    [SerializeField]
+    private PlayerConfig _configdata;
+
+    [SerializeField]
+    private float _time;
+
     public int Lives
     {
         get => _lives;
@@ -40,7 +56,9 @@ public class PlayerController : MonoBehaviour
                 
                 _anim.SetTrigger("isDead");
                 _canvasCtrl.ShowGameOverUI();
-                Time.timeScale = 0f;
+
+                Time.timeScale = 0f;//=>pause game
+                PlayerPrefs.SetFloat("time", _time);//=>save played time
             }
             _canvasCtrl.SetLives(Lives);
         }
@@ -52,7 +70,7 @@ public class PlayerController : MonoBehaviour
         {
             _score = value;
             _canvasCtrl.SetScore(Score);
-            PlayerPrefs.SetInt("score", _score);
+            PlayerPrefs.SetInt("score", _score);//=>save score;
         }
     }
 
@@ -61,7 +79,9 @@ public class PlayerController : MonoBehaviour
         _anim.SetBool("isIdle", true);
         _anim.SetBool("isLeft", false);
 
-        Lives = 3;
+        _speed = _configdata.Speed;
+        _lives = _configdata.Lives;
+
         _canvasCtrl.SetScore(Score);
         _canvasCtrl.SetLives(Lives);
     }
@@ -89,7 +109,7 @@ public class PlayerController : MonoBehaviour
         {
             _anim.SetBool("isIdle", true);
         }
-
+        _time += Time.deltaTime;
     }
 
     // OnTriggerEnter2D is called when the Collider2D other enters the trigger (2D physics only)
@@ -110,7 +130,7 @@ public class PlayerController : MonoBehaviour
         {
             Lives -= 1;
             _audio.PlayOneShot(_damageSound);
-
+            _healthbar.value = _lives;
             Destroy(collision.gameObject);
         }
     }
